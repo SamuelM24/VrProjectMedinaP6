@@ -2,9 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Spawn from a list of objects using an index
-/// </summary>
 public class SpawnFromList : MonoBehaviour
 {
     [Tooltip("List of objects that are spawned")]
@@ -31,6 +28,12 @@ public class SpawnFromList : MonoBehaviour
         SpawnAndReplace();
     }
 
+    public void PrintAtDropdownIndex(Dropdown dropdown)
+    {
+        index = Mathf.Clamp(dropdown.value, 0, originalObjects.Count);
+        PrintCreation();
+    }
+
     public void Spawn()
     {
         CreateObject();
@@ -42,23 +45,39 @@ public class SpawnFromList : MonoBehaviour
         ReplaceObject(newObject);
     }
 
+    public void PrintCreation()
+    {
+        GameObject newObject = CreateObject();
+        PrintObject(newObject);
+    }
+
     private GameObject CreateObject()
     {
         GameObject prefabToSpawn = originalObjects[index];
         GameObject newObject = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
-
-        if (attachToSpawnPoint)
-            newObject.transform.SetParent(spawnPoint);
-
+        if (attachToSpawnPoint) newObject.transform.SetParent(spawnPoint);
         return newObject;
     }
 
     private void ReplaceObject(GameObject newObject)
     {
-        if (currentObject)
-            Destroy(currentObject);
-
+        if (currentObject) Destroy(currentObject);
         currentObject = newObject;
+    }
+
+    private void PrintObject(GameObject objectToPrint)
+    {
+        // Assuming you have a reference to your table GameObject
+        GameObject table = GameObject.FindWithTag("Table");
+
+        if (table != null)
+        {
+            // Set the position of the printed object to be on the table
+            objectToPrint.transform.position = table.transform.position;
+
+            // Optionally, you can adjust the scale of the printed object
+            // Example: objectToPrint.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        }
     }
 
     public void SpawnRandom()
@@ -75,7 +94,6 @@ public class SpawnFromList : MonoBehaviour
 
     private void OnValidate()
     {
-        if (!spawnPoint)
-            spawnPoint = transform;
+        if (!spawnPoint) spawnPoint = transform;
     }
 }
