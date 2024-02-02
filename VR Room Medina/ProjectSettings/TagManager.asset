@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Trail
+  - Table
+  - SmallPedestal
   layers:
   - Default
   - TransparentFX

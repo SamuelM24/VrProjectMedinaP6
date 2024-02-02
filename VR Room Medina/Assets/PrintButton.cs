@@ -1,30 +1,31 @@
+using System.Diagnostics;
 using UnityEngine;
 
 public class PrintButton : MonoBehaviour
 {
-    public GameObject table; // Reference to the table where the miniature version will be placed
+    public GameObject spawnedObject; // Reference to the spawned object
 
-    private GameObject currentCreation; // Reference to the currently selected 3D creation
-
-    // Called when the "Print" button is clicked
+    // This function will be called when the "Print" button is clicked
     public void OnPrintButtonClick()
     {
-        if (currentCreation != null && table != null)
+        if (spawnedObject != null)
         {
-            // Duplicate the currently selected 3D creation
-            GameObject miniatureCreation = Instantiate(currentCreation);
+            
+            GameObject table = GameObject.FindWithTag("Table");
 
-            // Resize the miniature (you may need to adjust the scale factor)
-            miniatureCreation.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            if (table != null)
+            {
+                
+                spawnedObject.transform.position = table.transform.position;
 
-            // Place the miniature on the table
-            miniatureCreation.transform.position = table.transform.position;
+
+
+                UnityEngine.Debug.Log("3D creation printed!");
+            }
         }
-    }
-
-    // Set the currently selected 3D creation
-    public void SetCurrentCreation(GameObject newCreation)
-    {
-        currentCreation = newCreation;
+        else
+        {
+            UnityEngine.Debug.LogError("No object to print. Make sure an object is spawned on the pedestal.");
+        }
     }
 }

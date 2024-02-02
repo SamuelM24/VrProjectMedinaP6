@@ -1,20 +1,43 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SpawnFromList : MonoBehaviour
 {
-    [Tooltip("List of objects that are spawned")]
+    [Tooltip("List of prefab objects that can be spawned")]
     public List<GameObject> originalObjects = null;
 
     [Tooltip("Transform for how the object will be spawned")]
     public Transform spawnPoint = null;
+
+    [Tooltip("Transform for the small pedestal")]
+    public Transform smallPedestal = null;
 
     [Tooltip("Will the spawned object be childed to the point?")]
     public bool attachToSpawnPoint = false;
 
     private GameObject currentObject = null;
     private int index = 0;
+
+
+    private void Start()
+    {
+        // Ensure smallPedestal is initialized before using it
+        if (smallPedestal == null)
+        {
+            smallPedestal = GameObject.FindWithTag("SmallPedestal")?.transform;
+            if (smallPedestal == null)
+            {
+                UnityEngine.Debug.LogError("Small pedestal not found or assigned.");
+                return;
+            }
+        }
+
+        // Spawn the initial object when the game starts
+        Spawn();
+    }
+
 
     public void SpawnAtDropdownIndex(Dropdown dropdown)
     {
@@ -36,7 +59,15 @@ public class SpawnFromList : MonoBehaviour
 
     public void Spawn()
     {
-        CreateObject();
+        // Only spawn if there's a valid prefab at the specified index
+        if (originalObjects.Count > 0 && index < originalObjects.Count && originalObjects[index] != null)
+        {
+            CreateObject();
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("Invalid prefab index or prefab is null.");
+        }
     }
 
     public void SpawnAndReplace()
@@ -51,13 +82,42 @@ public class SpawnFromList : MonoBehaviour
         PrintObject(newObject);
     }
 
+
     private GameObject CreateObject()
     {
-        GameObject prefabToSpawn = originalObjects[index];
-        GameObject newObject = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
-        if (attachToSpawnPoint) newObject.transform.SetParent(spawnPoint);
-        return newObject;
+        // Ensure index is within bounds
+        if (index >= 0 && index < originalObjects.Count)
+        {
+            GameObject prefabToSpawn = originalObjects[index];
+
+            // Ensure the prefabToSpawn is not null before instantiating
+            if (prefabToSpawn != null)
+            {
+                UnityEngine.Debug.Log("Instantiating: " + prefabToSpawn.name);
+
+                GameObject newObject = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
+
+                if (attachToSpawnPoint)
+                {
+                    newObject.transform.SetParent(spawnPoint);
+                }
+
+                return newObject;
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("Prefab to spawn is null.");
+            }
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("Invalid prefab index.");
+        }
+
+        return null;
     }
+
+
 
     private void ReplaceObject(GameObject newObject)
     {
@@ -67,33 +127,35 @@ public class SpawnFromList : MonoBehaviour
 
     private void PrintObject(GameObject objectToPrint)
     {
-        // Assuming you have a reference to your table GameObject
-        GameObject table = GameObject.FindWithTag("Table");
+        UnityEngine.Debug.Log("objectToPrint: " + objectToPrint);
+        UnityEngine.Debug.Log("smallPedestal: " + smallPedestal);
 
-        if (table != null)
+        if (objectToPrint != null && smallPedestal != null)
         {
-            // Set the position of the printed object to be on the table
-            objectToPrint.transform.position = table.transform.position;
+            // Get the position of the original pedestal
+            Vector3 originalPedestalPosition = spawnPoint.position;
 
-            // Optionally, you can adjust the scale of the printed object
-            // Example: objectToPrint.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            // Get the position of the small pedestal
+            Vector3 smallPedestalPosition = smallPedestal.position + new Vector3(0, 0.5f, 0);
+
+            // Calculate the position for the clone above the small pedestal
+            Vector3 spawnPosition = new Vector3(smallPedestalPosition.x, smallPedestalPosition.y + 0.5f, smallPedestalPosition.z);
+
+            // Create a clone of the original object above the small pedestal
+            GameObject cloneObject = Instantiate(objectToPrint, spawnPosition, Quaternion.identity);
+
+            // Optionally, you can set the cloneObject as a child of the small pedestal
+            cloneObject.transform.parent = smallPedestal;
+
+            UnityEngine.Debug.Log("Miniature version created above the small pedestal!");
         }
-    }
+        else
+        {
+            UnityEngine.Debug.LogError("Invalid object or small pedestal reference. Make sure you have valid objects.");
+        }
 
-    public void SpawnRandom()
-    {
-        index = Random.Range(0, originalObjects.Count);
-        Spawn();
-    }
+}
 
-    public void SpawnAtIndex(int value)
-    {
-        index = value;
-        Spawn();
-    }
 
-    private void OnValidate()
-    {
-        if (!spawnPoint) spawnPoint = transform;
-    }
+    // ... (other methods)
 }
