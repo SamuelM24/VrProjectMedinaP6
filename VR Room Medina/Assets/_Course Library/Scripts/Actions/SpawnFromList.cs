@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,9 +16,10 @@ public class SpawnFromList : MonoBehaviour
     [Tooltip("Will the spawned object be childed to the point?")]
     public bool attachToSpawnPoint = false;
 
+    public ObjectRotation objectRotation;  // Reference to the ObjectRotation script
+
     private GameObject currentObject = null;
     private int index = 0;
-
 
     private void Start()
     {
@@ -37,7 +37,6 @@ public class SpawnFromList : MonoBehaviour
         // Spawn the initial object when the game starts
         Spawn();
     }
-
 
     public void SpawnAtDropdownIndex(Dropdown dropdown)
     {
@@ -82,7 +81,6 @@ public class SpawnFromList : MonoBehaviour
         PrintObject(newObject);
     }
 
-
     private GameObject CreateObject()
     {
         // Ensure index is within bounds
@@ -102,6 +100,12 @@ public class SpawnFromList : MonoBehaviour
                     newObject.transform.SetParent(spawnPoint);
                 }
 
+                // Set the prefab instance in the ObjectRotation script
+                if (objectRotation != null)
+                {
+                    objectRotation.SetPrefabInstance(newObject);
+                }
+
                 return newObject;
             }
             else
@@ -116,8 +120,6 @@ public class SpawnFromList : MonoBehaviour
 
         return null;
     }
-
-
 
     private void ReplaceObject(GameObject newObject)
     {
@@ -153,9 +155,5 @@ public class SpawnFromList : MonoBehaviour
         {
             UnityEngine.Debug.LogError("Invalid object or small pedestal reference. Make sure you have valid objects.");
         }
-
-}
-
-
-    // ... (other methods)
+    }
 }

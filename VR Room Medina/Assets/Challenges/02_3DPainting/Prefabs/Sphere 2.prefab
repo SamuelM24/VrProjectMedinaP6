@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &81310214062379520
+--- !u!1 &8850661482845776949
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,28 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 89257321411297642}
-  - component: {fileID: 2237299600405672273}
-  - component: {fileID: 7764548205623571191}
-  - component: {fileID: 5595662440220042247}
-  - component: {fileID: -4465302746153059541}
-  - component: {fileID: 5694245084872086763}
-  - component: {fileID: -3242433712704837946}
+  - component: {fileID: 7125568516605651254}
+  - component: {fileID: 8801864655696771760}
+  - component: {fileID: 6417789452816361100}
+  - component: {fileID: 7835321255756303030}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Sphere 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &89257321411297642
+--- !u!4 &7125568516605651254
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81310214062379520}
-  m_LocalRotation: {x: 0, y: -0.62057054, z: 0, w: -0.78415066}
+  m_GameObject: {fileID: 8850661482845776949}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: 0, y: 1.5, z: 0.5}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
@@ -37,21 +34,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2237299600405672273
+--- !u!33 &8801864655696771760
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81310214062379520}
+  m_GameObject: {fileID: 8850661482845776949}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7764548205623571191
+--- !u!23 &6417789452816361100
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81310214062379520}
+  m_GameObject: {fileID: 8850661482845776949}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
@@ -87,62 +84,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5595662440220042247
+--- !u!114 &7835321255756303030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81310214062379520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28077fd73ec3ba543a79fa4de8e952f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabToDuplicate: {fileID: 81310214062379520}
-  pedestalObject: {fileID: 1709714844739794243, guid: 0003de42438d9e4488dc196bb148599f,
-    type: 3}
-  abovePedestalHeight: 0.5
-  shrinkFactor: 0.5
---- !u!114 &-4465302746153059541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81310214062379520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b0a8ace895900748811dee549616bae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 90
---- !u!114 &5694245084872086763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81310214062379520}
+  m_GameObject: {fileID: 8850661482845776949}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9efcd08ecba00548b30a8439a87059f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSlider: {fileID: 6965606435150020926, guid: cb77be5eea2b4bf4bb2cc14e0f14446c,
-    type: 3}
+  rotationSlider: {fileID: 0}
   rotationSpeed: 90
   prefab: {fileID: 0}
---- !u!114 &-3242433712704837946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81310214062379520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3dae012675400448bca249399f8cac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 90
