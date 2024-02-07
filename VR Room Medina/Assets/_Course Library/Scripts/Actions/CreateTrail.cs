@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// This script creates a trail at the location of a gameobject with a particular width and color.
-/// </summary>
-
 public class CreateTrail : MonoBehaviour
 {
     public GameObject trailPrefab = null;
@@ -11,14 +7,15 @@ public class CreateTrail : MonoBehaviour
     private float width = 0.05f;
     private Color color = Color.white;
 
-    private GameObject currentTrail = null;
+    private GameObject drawnTrail; // Variable to store the drawn trail
 
     public void StartTrail()
     {
-        if (!currentTrail)
+        Debug.Log("StartTrail method called."); // Debug log to track method call
+        if (!drawnTrail)
         {
-            currentTrail = Instantiate(trailPrefab, transform.position, transform.rotation, transform);
-            ApplySettings(currentTrail);
+            drawnTrail = Instantiate(trailPrefab, transform.position, transform.rotation, transform);
+            ApplySettings(drawnTrail);
         }
     }
 
@@ -32,10 +29,11 @@ public class CreateTrail : MonoBehaviour
 
     public void EndTrail()
     {
-        if (currentTrail)
+        Debug.Log("EndTrail method called."); // Debug log to track method call
+        if (drawnTrail)
         {
-            currentTrail.transform.parent = null;
-            currentTrail = null;
+            drawnTrail.transform.parent = null;
+            drawnTrail = null;
         }
     }
 
@@ -47,5 +45,15 @@ public class CreateTrail : MonoBehaviour
     public void SetColor(Color value)
     {
         color = value;
+    }
+
+    public GameObject GetDrawnTrail()
+    {
+        return drawnTrail;
+    }
+
+    public void SetDrawnTrail(GameObject trail)
+    {
+        drawnTrail = trail;
     }
 }
