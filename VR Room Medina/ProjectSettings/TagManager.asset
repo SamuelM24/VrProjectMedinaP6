@@ -8,6 +8,9 @@ TagManager:
   - Trail
   - Table
   - SmallPedestal
+  - Light
+  - Candle
+  - Flame
   layers:
   - Default
   - TransparentFX
