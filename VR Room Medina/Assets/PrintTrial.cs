@@ -1,41 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class PrintTrial : MonoBehaviour
 {
     public Transform paintbrush;
-    public GameObject trailPrefab;
-    public Transform spawnPoint;
+    CreateTrail creator;
+    public Material trailMaterial;
+    // Start is called before the first frame update
+    void Start()
+    {
+        creator = GetComponent<CreateTrail>();
+        Color color = Color.white;
+        color.a = 0.0f;
+        creator.trailPrefab.GetComponent<TrailRenderer>().startColor = color;
+        creator.trailPrefab.GetComponent<TrailRenderer>().endColor = color;
+    }
 
-    private GameObject drawnTrail; // Store the drawn trail GameObject
-
+    // Update is called once per frame
     void Update()
     {
-        // Update the position of this GameObject based on the paintbrush position
-        if (paintbrush != null)
-        {
-            transform.position = paintbrush.position - Vector3.forward * 0.5f + Vector3.right * 1.5f;
-        }
+        transform.localPosition = (paintbrush.position - Vector3.forward * 0.5f) * 0.25f;
+        Color color = GameObject.Find("Paintbrush").GetComponent<CreateTrail>().color;
+        creator.trailPrefab.GetComponent<TrailRenderer>().startColor = color;
+        creator.trailPrefab.GetComponent<TrailRenderer>().endColor = color;
     }
 
-    public void SpawnTrail()
+    public void Print()
     {
-        if (drawnTrail != null)
+        GameObject[] currentPrint = GameObject.FindGameObjectsWithTag("Saved Trail");
+        foreach (GameObject go in currentPrint)
         {
-            // Duplicate the drawn trail GameObject at the spawn point
-            GameObject newTrail = Instantiate(drawnTrail, spawnPoint.position, drawnTrail.transform.rotation);
-
-            // Optionally, you can apply any modifications to the new trail GameObject here
-
-            Debug.Log("Trail cloned at the spawn point.");
+            Destroy(go);
         }
-        else
-        {
-            Debug.LogWarning("No drawn trail found to duplicate!");
-        }
-    }
-
-    public void SetDrawnTrail(GameObject trail)
-    {
-        drawnTrail = trail;
     }
 }
