@@ -31,6 +31,7 @@ public class ShowMessageFromList : MonoBehaviour
         if (newIndex < index)
         {
             OnComplete.Invoke();
+            ToggleRaysAndConsoleFunctionality(true);
         }
         else
         {
@@ -53,5 +54,27 @@ public class ShowMessageFromList : MonoBehaviour
     {
         index = value;
         ShowMessage();
+    }
+
+    // Function to toggle rays and console functionality
+    private void ToggleRaysAndConsoleFunctionality(bool active)
+    {
+        // Find the rays object and toggle its activity
+        GameObject raysObject = GameObject.FindWithTag("Rays");
+        if (raysObject != null)
+        {
+            raysObject.SetActive(active);
+        }
+
+        // Find the console object and toggle its functionality
+        GameObject consoleObject = GameObject.FindWithTag("Console");
+        if (consoleObject != null)
+        {
+            ConsoleInteraction consoleInteraction = consoleObject.GetComponent<ConsoleInteraction>();
+            if (consoleInteraction != null)
+            {
+                consoleInteraction.ToggleConsoleInteraction(active);
+            }
+        }
     }
 }

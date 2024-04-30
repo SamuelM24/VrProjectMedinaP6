@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Move an object using velocity
-/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class MoveWithVelocity : MonoBehaviour
 {
@@ -47,6 +44,11 @@ public class MoveWithVelocity : MonoBehaviour
     public void SetUpVelocity(float value)
     {
         inputVelocity.y = value;
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 
     private void OnValidate()

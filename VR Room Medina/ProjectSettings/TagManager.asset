@@ -11,6 +11,9 @@ TagManager:
   - Light
   - Candle
   - Flame
+  - Box
+  - Rays
+  - Console
   layers:
   - Default
   - TransparentFX

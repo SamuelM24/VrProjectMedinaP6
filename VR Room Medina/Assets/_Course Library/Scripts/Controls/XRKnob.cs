@@ -3,9 +3,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-/// <summary>
-/// An interactable knob that follows the rotation of the interactor
-/// </summary>
 public class XRKnob : XRBaseInteractable
 {
     [Tooltip("The transform of the visual component of the knob")]
@@ -27,6 +24,8 @@ public class XRKnob : XRBaseInteractable
 
     public float Value { get; private set; } = 0.0f;
     public float Angle { get; private set; } = 0.0f;
+
+    public MoveWithVelocity magnetMovement;
 
     private IXRSelectInteractor selectInteractor = null;
     private Quaternion selectRotation = Quaternion.identity;
@@ -112,5 +111,9 @@ public class XRKnob : XRBaseInteractable
     {
         Value = Mathf.InverseLerp(minimum, maximum, rotation);
         OnValueChange.Invoke(Value);
+
+        // Set the speed of the magnet based on the knob value
+        float newSpeed = Mathf.Lerp(1.0f, 10.0f, Value); // Adjust the range and speed as needed
+        magnetMovement.SetSpeed(newSpeed);
     }
 }
